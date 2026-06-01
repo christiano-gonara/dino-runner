@@ -21,19 +21,11 @@ Projeto final da disciplina de Introdução a Algoritmos/Programação, desenvol
 
 ## Descrição do jogo
 
-Descreva brevemente a ideia principal do jogo.
-
-Exemplo:
-
-> O jogo consiste em controlar um personagem que deve coletar moedas e evitar obstáculos. O jogador ganha pontos ao coletar itens e perde vidas ao colidir com obstáculos. A partida termina quando o tempo acaba ou quando o jogador perde todas as vidas.
+> O jogador controla um cavaleiro em visão top-down que deve coletar gemas espalhadas pelo mapa e desviar de morcegos. Cada gema coletada vale pontos. Colidir com um morcego reduz uma vida. A partida termina quando o jogador perde todas as vidas.
 
 ## Objetivo do jogador
 
-Explique o que o jogador precisa fazer para vencer ou avançar no jogo.
-
-Exemplo:
-
-> O objetivo é coletar a maior quantidade possível de itens antes que o tempo acabe, evitando colisões com os obstáculos.
+> Coletar o maior número possível de gemas antes de perder todas as vidas, sobrevivendo aos morcegos que percorrem o mapa.
 
 ## Regras do jogo
 
