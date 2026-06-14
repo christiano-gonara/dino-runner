@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from src.config import (
     LARGURA_TELA,
@@ -38,14 +39,14 @@ def executar_jogo():
     # 1. Carregando as imagens recortadas do Spritesheet
 
 
-    # Jogador: usando tamanho 110x110 para capturar o quadrado perfeitamente
-    player_image = pegar_sprite(CAMINHO_SPRITES, x=110, y=120, width=190, height=190, scale=0.5)
+    # Jogador: recorte sem margem branca
+    player_image = pegar_sprite(CAMINHO_SPRITES, x=92, y=87, width=220, height=225, scale=0.5)
 
-    # Gema pequena: usando tamanho 64x64
-    gem_image    = pegar_sprite(CAMINHO_SPRITES, x=900, y=690, width=200, height=200, scale=0.5)
+    # Gema: recorte sem margem branca
+    gem_image    = pegar_sprite(CAMINHO_SPRITES, x=887, y=677, width=215, height=218, scale=0.5)
 
-    # Morcego: usando tamanho 180x120 por causa das asas abertas
-    bat_image    = pegar_sprite(CAMINHO_SPRITES, x=905, y=1060, width=200, height=130, scale=0.5)
+    # Morcego: recorte sem margem branca
+    bat_image    = pegar_sprite(CAMINHO_SPRITES, x=898, y=1035, width=212, height=188, scale=0.5)
     
     # 2. Criando a estrutura de Sprites usando Dicionários
     jogador = {
@@ -60,13 +61,17 @@ def executar_jogo():
     
     inimigo = {
         "imagem": bat_image,
-        "rect": bat_image.get_rect(topleft=(200, 500))
+        "rect": bat_image.get_rect(topleft=(200, 500)),
+        "vel_x": random.choice([-2, 2]),
+        "vel_y": random.choice([-2, 2]),
     }
 
     velocidade = 5
     pontos = 0
     vidas = 3
     recorde = carregar_recorde(CAMINHO_RECORDE)
+    tempo_ultimo_dano = 0
+    INTERVALO_INVULNERAVEL = 2000
 
     # Loop principal: processa entrada, atualiza estado e renderiza a cena.
     while rodando:
@@ -92,32 +97,35 @@ def executar_jogo():
         jogador["rect"].x = limitar_valor(jogador["rect"].x, 0, LARGURA_TELA - jogador["rect"].width)
         jogador["rect"].y = limitar_valor(jogador["rect"].y, 0, ALTURA_TELA - jogador["rect"].height)
 
-        # Verificação de colisão com a Gema (antigo 'item')
+        # Movimentação do morcego
+        inimigo["rect"].x += inimigo["vel_x"]
+        inimigo["rect"].y += inimigo["vel_y"]
+
+        # Rebote nas bordas da tela
+        if inimigo["rect"].left <= 0 or inimigo["rect"].right >= LARGURA_TELA:
+            inimigo["vel_x"] *= -1
+            inimigo["rect"].x = limitar_valor(inimigo["rect"].x, 0, LARGURA_TELA - inimigo["rect"].width)
+        if inimigo["rect"].top <= 0 or inimigo["rect"].bottom >= ALTURA_TELA:
+            inimigo["vel_y"] *= -1
+            inimigo["rect"].y = limitar_valor(inimigo["rect"].y, 0, ALTURA_TELA - inimigo["rect"].height)
+
+        # Verificação de colisão com a Gema
         if verificar_colisao(jogador["rect"], gema["rect"]):
             pontos = calcular_pontos(pontos, 10)
 
-            # Move a gema de lugar ao coletar
-            gema["rect"].x += 80
-            gema["rect"].y += 50
+            gema["rect"].x = random.randint(0, LARGURA_TELA - gema["rect"].width)
+            gema["rect"].y = random.randint(0, ALTURA_TELA - gema["rect"].height)
 
-            # Se a gema sair da tela, volta para uma posição segura
-            if gema["rect"].x > LARGURA_TELA - gema["rect"].width:
-                gema["rect"].x = 50
-            if gema["rect"].y > ALTURA_TELA - gema["rect"].height:
-                gema["rect"].y = 50
-
-        # Verificação de colisão com o Inimigo
-        if verificar_colisao(jogador["rect"], inimigo["rect"]):
+        # Verificação de colisão com o Inimigo com invulnerabilidade
+        agora = pygame.time.get_ticks()
+        if verificar_colisao(jogador["rect"], inimigo["rect"]) and agora - tempo_ultimo_dano >= INTERVALO_INVULNERAVEL:
             vidas = tomar_dano(vidas, 1)
+            tempo_ultimo_dano = agora
 
-            # Afasta o inimigo ao colidir
-            inimigo["rect"].x += 80
-            inimigo["rect"].y += 50
-
-            if inimigo["rect"].x > LARGURA_TELA - inimigo["rect"].width:
-                inimigo["rect"].x = 50
-            if inimigo["rect"].y > ALTURA_TELA - inimigo["rect"].height:
-                inimigo["rect"].y = 50
+            inimigo["rect"].x = random.randint(0, LARGURA_TELA - inimigo["rect"].width)
+            inimigo["rect"].y = random.randint(0, ALTURA_TELA - inimigo["rect"].height)
+            inimigo["vel_x"] = random.choice([-2, 2])
+            inimigo["vel_y"] = random.choice([-2, 2])
 
         # Regras de fim de jogo e recorde
         if jogador_perdeu(vidas):
