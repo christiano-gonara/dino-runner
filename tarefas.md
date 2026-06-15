@@ -1,29 +1,31 @@
->> ## Semana 1 — Proposta (entrega 31/05) ✅
->> - [x] Preencher `docs/proposta.MD`
->> - [x] Atualizar nome e integrante no `README.md`
->> 
->> ## Semana 2 — Protótipo inicial (entrega 07/06) ✅
->> - [x] Janela pygame abrindo sem erros
->> - [x] Loop principal implementado
->> - [x] Jogador se movendo com setas do teclado
->> - [x] Gema aparecendo na tela com colisão
->> - [x] Morcego aparecendo na tela (estático)
->> - [x] Recorde salvo e carregado de `data/recorde.txt`
->> - [x] Código organizado em módulos (`config`, `funcoes`, `sprites`, `dados`, `jogo`)
->> 
->> ## Semana 3 — Interações e regras principais (entrega 14/06)
->> - [x] Morcego se movendo pela tela (movimentação aleatória simples)
->> - [x] Morcego rebate nas bordas da tela sem sair
->> - [x] Colisão com morcego reduz vida e reposiciona o morcego
->> - [ ] Tela de fim de jogo exibida ao perder todas as vidas (em vez de fechar direto)
->> - [ ] Pontuação e vidas exibidas na tela (não só no título da janela)
->> - [ ] Atualizar `tests/test_logica.py` com testes de colisão e recorde
->> 
->> ## Semana 4 — Finalização e apresentação (entrega 21/06)
->> - [ ] README completo com regras, controles e como executar
->> - [ ] Testes todos passando com `pytest`
->> - [ ] Código revisado e comentado
->> - [ ] Tela inicial com título e instrução para começar (melhoria)
->> - [ ] Aumento de dificuldade a cada rodada (melhoria)
->> - [ ] Sons de coleta e dano (melhoria, se der tempo)
->> - [ ] Preparar explicação para apresentação em sala
+# Tarefas - Termo
+
+## Tarefa 1 — Lógica pura
+- [x] Implementar `verificar_tentativa(tentativa, palavra_secreta)` → lista com "verde", "amarelo" ou "cinza" pra cada letra
+- [x] Implementar `jogador_venceu(resultado)` → bool
+- [x] Implementar `tentativas_esgotadas(tentativas_usadas, max_tentativas)` → bool
+- [x] Testes em `tests/test_logica.py` cobrindo as funções acima
+
+## Tarefa 2 — Palavras e dificuldade
+- [x] Criar `data/palavras_4.txt`, `data/palavras_5.txt`, `data/palavras_6.txt`
+- [x] Implementar função pra sortear palavra aleatória do arquivo conforme dificuldade
+- [x] Tela de seleção de dificuldade (Fácil 4 letras / Médio 5 letras / Difícil 6 letras)
+
+## Tarefa 3 — Grade e entrada do jogador
+- [x] Capturar entrada do teclado letra por letra
+- [x] Desenhar grade de células (6 linhas x N colunas) com `pygame.draw.rect`
+- [x] Exibir letras digitadas nas células
+
+## Tarefa 4 — Cores e feedback visual
+- [x] Aplicar cores nas células conforme resultado (verde/amarelo/cinza)
+- [x] Desenhar teclado virtual na tela com estado de cada letra colorida
+
+## Tarefa 5 — Fim de jogo e recorde
+- [x] Condição de vitória com tela de fim de jogo
+- [x] Condição de derrota com tela de fim de jogo e revelação da palavra
+- [x] Recorde salvo em `data/recorde.txt` (partidas vencidas)
+
+## Tarefa 6 — Finalização
+- [x] README atualizado com regras e controles
+- [x] Atualizar `docs/proposta.MD` com nova proposta
+- [x] Todos os testes passando com `pytest`

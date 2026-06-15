@@ -1,59 +1,48 @@
-#  MORCEGOIDE
+# TERMO
 
-Projeto final da disciplina de Introdução a Algoritmos/Programação, desenvolvido com Python e Pygame.
-
+Jogo de adivinhação de palavras inspirado no Wordle/Termo, desenvolvido com Python e pygame-ce.
 
 ## Integrantes do grupo
 
 - Christiano Gonçalves Araujo
-- Nome do integrante 2
-- Nome do integrante 3
-- Nome do integrante 4
 
 ## Estrutura do projeto
 
 - `main.py`: ponto de entrada da aplicação.
-- `src/`: código-fonte principal do jogo (loop, regras, sprites e dados).
-- `assets/`: imagens, fontes e sons.
-- `data/`: arquivos persistentes (recorde/ranking).
+- `src/`: código-fonte principal do jogo (configurações, funções lógicas, dados e loop principal).
+- `assets/`: imagens e fontes.
+- `data/`: arquivos de palavras e recorde.
 - `tests/`: testes unitários com `pytest`.
 - `docs/`: documentação do projeto, incluindo proposta inicial.
 
 ## Descrição do jogo
 
-> O jogador controla um cavaleiro em visão top-down que deve coletar gemas espalhadas pelo mapa e desviar de morcegos. Cada gema coletada vale pontos. Colidir com um morcego reduz uma vida. A partida termina quando o jogador perde todas as vidas.
+> O jogador tem 6 tentativas para adivinhar uma palavra secreta. A cada tentativa, as letras recebem cores que indicam se estão corretas e na posição certa (verde), se estão na palavra mas em posição errada (amarelo), ou se não fazem parte da palavra (cinza). O jogo possui 3 níveis de dificuldade: Fácil (4 letras), Médio (5 letras) e Difícil (6 letras).
 
 ## Objetivo do jogador
 
-> Coletar o maior número possível de gemas antes de perder todas as vidas, sobrevivendo aos morcegos que percorrem o mapa.
+> Adivinhar a palavra secreta no menor número de tentativas possível, acumulando vitórias ao longo das partidas.
 
 ## Regras do jogo
 
-Liste as principais regras do jogo.
-
-Exemplo:
-
-- O jogador se movimenta usando as setas do teclado.
-- Cada item coletado aumenta a pontuação.
-- Colidir com um obstáculo reduz a quantidade de vidas.
-- A partida termina quando o jogador perde todas as vidas ou quando o tempo acaba.
+- Escolha uma dificuldade na tela inicial (Fácil = 4 letras, Médio = 5 letras, Difícil = 6 letras).
+- Digite letras no teclado para formar sua tentativa.
+- Pressione ENTER para confirmar a tentativa.
+- Letras verdes = letra correta na posição correta.
+- Letras amarelas = letra correta em posição errada.
+- Letras cinza = letra não está na palavra secreta.
+- Você tem 6 tentativas para acertar a palavra.
+- Após o fim da partida, pressione R para jogar novamente ou ESC para sair.
 
 ## Controles
 
-Informe as teclas ou comandos utilizados no jogo.
-
-Exemplo:
-
-- Seta para cima: mover para cima
-- Seta para baixo: mover para baixo
-- Seta para esquerda: mover para esquerda
-- Seta para direita: mover para direita
-- Espaço: realizar ação
+- Teclas A-Z: digitar letras
+- BACKSPACE: apagar a última letra
+- ENTER: confirmar tentativa
+- R (na tela de fim): jogar novamente
 - ESC: sair do jogo
 
 ## Como executar o projeto
-
-### 1. Clonar o repositório
 
 ```bash
 git clone LINK_DO_REPOSITORIO
@@ -68,15 +57,9 @@ python main.py
 python -m pytest
 ```
 
-## Checklist mínimo para entrega
+## Checklist para entrega
 
-- Preencher este README com nome final, descrição real, regras e controles do jogo.
-- Atualizar `docs/proposta.MD` com a proposta do grupo.
-- Garantir que o jogo executa com `python main.py`.
-- Garantir que os testes passam com `pytest`.
-
-## Observações para os alunos
-
-- Mantenham o código organizado em módulos pequenos e com responsabilidade clara.
-- Comentem partes importantes da lógica, principalmente regras do jogo.
-- Registrem decisões técnicas no README do grupo ao longo do desenvolvimento.
+- README atualizado com descrição, regras e controles.
+- `docs/proposta.MD` atualizado com a nova proposta.
+- Jogo executa com `python main.py`.
+- Testes passam com `pytest`.
