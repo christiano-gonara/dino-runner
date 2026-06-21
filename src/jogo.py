@@ -17,20 +17,19 @@ from src.obstaculo import CactoPequeno, CactoGrande, Passaro
 
 class Nuvem:
     def __init__(self):
-        """Posiciona a nuvem além da borda direita para entrar gradualmente na tela."""
+        """Inicializa fora da tela à direita."""
         self.x = LARGURA + random.randint(800, 1000)
         self.y = random.randint(50, 100)
         self.largura = NUVEM.get_width()
 
     def atualizar(self, vel):
-        """Move a nuvem para a esquerda e a reposiciona ao sair pela borda esquerda."""
+        """Move e recicla ao sair pela esquerda."""
         self.x -= vel
         if self.x < -self.largura:
             self.x = LARGURA + random.randint(2500, 3000)
             self.y = random.randint(50, 100)
 
     def desenhar(self):
-        """Desenha a nuvem na posição atual."""
         TELA.blit(NUVEM, (self.x, self.y))
 
 
@@ -44,7 +43,7 @@ class Jogo:
         self._inicializar_partida()
 
     def _inicializar_partida(self):
-        """Cria todos os objetos e zera os contadores para uma nova partida."""
+        """Zera contadores e recria os objetos da partida."""
         self.dino = Dino()
         self.obstaculos = []
         self.nuvem = Nuvem()
@@ -57,11 +56,10 @@ class Jogo:
         self.ultimo_tempo = pygame.time.get_ticks()
 
     def reiniciar(self):
-        """Reinicia o jogo chamando a inicialização de partida novamente."""
         self._inicializar_partida()
 
     def gerar_obstaculo(self):
-        """Gera um novo obstáculo aleatoriamente — mesma lógica do original"""
+        """Gera um obstáculo quando a lista está vazia."""
         if len(self.obstaculos) == 0:
             if random.randint(0, 2) == 0:
                 self.obstaculos.append(CactoPequeno())
@@ -69,6 +67,7 @@ class Jogo:
                 self.obstaculos.append(CactoGrande())
             elif random.randint(0, 2) == 2:
                 self.obstaculos.append(Passaro())
+
 
     def atualizar(self):
         """Atualiza toda a lógica do jogo"""
@@ -87,14 +86,14 @@ class Jogo:
             self.ranking = ler_ranking()
             return
 
-        # contador de frames; pontos sobem 1 a cada PONTOS_POR_FRAME frames
+        # pontos e velocidade
         self.frame += 1
         if self.frame % PONTOS_POR_FRAME == 0:
             self.pontos += 1
             if self.pontos % AUMENTO_VEL == 0:
                 self.vel_jogo += INCREMENTO_VEL
 
-        # entrada do jogador (input e física tratados juntos no dino, igual ao original)
+        # input
         teclas = pygame.key.get_pressed()
         self.dino.atualizar(teclas)
 
@@ -105,7 +104,7 @@ class Jogo:
             if obs.saiu():
                 self.obstaculos.remove(obs)
 
-        # colisões (ignoradas enquanto dino estiver invulnerável)
+        # colisões
         for obs in self.obstaculos[:]:
             if self.dino.rect.colliderect(obs.rect) and not self.dino.invulneravel:
                 self.vidas -= 1
@@ -125,6 +124,7 @@ class Jogo:
         if self.x_bg <= -TRILHA.get_width():
             self.x_bg = 0
 
+
     def desenhar(self):
         """Desenha tudo na tela."""
         TELA.fill(BRANCO)
@@ -138,9 +138,9 @@ class Jogo:
         elif self.estado == "vitoria":
             self._desenhar_vitoria()
 
+
     def _desenhar_jogo(self):
-        """Desenha fundo, nuvem, dino, obstáculos e HUD."""
-        # fundo rolante (Track)
+        """Desenha fundo, nuvem, dino, obstáculos e HUD"""
         largura_trilha = TRILHA.get_width()
         TELA.blit(TRILHA, (self.x_bg, TRILHA_Y))
         TELA.blit(TRILHA, (self.x_bg + largura_trilha, TRILHA_Y))
@@ -154,8 +154,9 @@ class Jogo:
         desenhar_texto(f"Tempo: {formatar_tempo(max(0, self.tempo))}", 20, VERMELHO, 100, 30)
         desenhar_texto(f"Vidas: {self.vidas}", 20, VERMELHO, 500, 30)
 
+
     def _desenhar_menu(self):
-        """Desenha a tela de menu com ranking."""
+        """Desenha a tela de menu com ranking"""
         desenhar_texto("DINO RUNNER", 50, PRETO, LARGURA // 2, 120)
         desenhar_texto("Sobreviva 30 segundos!", 20, PRETO, LARGURA // 2, 170)
         desenhar_texto("Pressione ESPACO para comecar", 20, PRETO, LARGURA // 2, 200)
@@ -166,14 +167,16 @@ class Jogo:
             for i, pontos in enumerate(self.ranking[:5]):
                 desenhar_texto(f"{i+1}. {pontos}", 16, PRETO, LARGURA // 2, 305 + i * 22)
 
+
     def _desenhar_gameover(self):
-        """Desenha a tela de game over."""
+        """Desenha a tela de game over"""
         desenhar_texto("GAME OVER", 50, VERMELHO, LARGURA // 2, ALTURA // 2 - 40)
         desenhar_texto(f"Pontos: {self.pontos}", 25, PRETO, LARGURA // 2, ALTURA // 2 + 20)
         desenhar_texto("Pressione ESPACO para recomecar", 20, PRETO, LARGURA // 2, ALTURA // 2 + 60)
 
+
     def _desenhar_vitoria(self):
-        """Desenha a tela de vitória com ranking."""
+        """Desenha a tela de vitória com ranking"""
         desenhar_texto("VOCE VENCEU!", 50, VERDE, LARGURA // 2, ALTURA // 2 - 60)
         desenhar_texto(f"Pontos: {self.pontos}", 25, PRETO, LARGURA // 2, ALTURA // 2)
 
@@ -184,8 +187,9 @@ class Jogo:
 
         desenhar_texto("Pressione ESPACO para recomecar", 20, PRETO, LARGURA // 2, ALTURA // 2 + 190)
 
+
     def eventos(self):
-        """Processa eventos do pygame."""
+        """Processa eventos do pygame"""
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 return False
@@ -198,8 +202,9 @@ class Jogo:
 
         return True
 
+
     def rodar(self):
-        """Loop principal do jogo."""
+        """Loop principal do jogo"""
         rodando = True
 
         while rodando:
@@ -214,6 +219,6 @@ class Jogo:
 
 
 def main():
-    """Inicia o jogo."""
+    """Inicia o jogo"""
     jogo = Jogo()
     jogo.rodar()

@@ -7,9 +7,7 @@ class Obstaculo:
     """Base para todos os obstáculos."""
 
     def __init__(self, imagem, y):
-        """Posiciona o obstáculo fora da tela à direita para entrar rolando.
-        O rect é criado com as dimensões reais da imagem para colisão precisa.
-        """
+        """Inicia na borda direita com rect do tamanho real da imagem."""
         self.imagem = imagem
         self.x = LARGURA
         self.y = y
@@ -21,11 +19,10 @@ class Obstaculo:
         self.rect.x = self.x
 
     def saiu(self):
-        """Verifica se o obstáculo saiu da tela."""
+        """True se saiu pela borda esquerda."""
         return self.x < -self.imagem.get_width()
 
     def desenhar(self):
-        """Desenha o obstáculo na tela."""
         TELA.blit(self.imagem, (self.x, self.y))
 
 
@@ -44,12 +41,12 @@ class CactoGrande(Obstaculo):
 
 
 class Passaro(Obstaculo):
-    """Pássaro que voa na altura média."""
+    """Pássaro animado."""
     def __init__(self):
         self.index = 0
         super().__init__(PASSARO_IMG[0], PASSARO_Y)
 
     def desenhar(self):
-        """Anima o pássaro alternando entre 2 frames."""
+        """Voo com 2 frames alternados."""
         self.index = (self.index + 1) % 10
         TELA.blit(PASSARO_IMG[self.index // 5], (self.x, self.y))

@@ -6,6 +6,7 @@ TECLA_PULAR = [pygame.K_UP, pygame.K_w]
 TECLA_ABAIXAR = [pygame.K_DOWN, pygame.K_s]
 TECLA_INICIAR = [pygame.K_SPACE, pygame.K_RETURN]
 
+
 # Jogo
 VIDAS_MAX = 3
 TEMPO_LIMITE = 30
@@ -16,18 +17,20 @@ VEL_JOGO = 25     #velocidade inicial dos obstáculos
 PONTOS_POR_FRAME = 5      # conta 1 ponto a cada X frames
 AUMENTO_VEL = 10         # aumenta velocidade a cada X pontos
 INCREMENTO_VEL = 3       # quanto a velocidade aumenta por vez
-TEMPO_INVULNERAVEL = 2000 # duração da invulnerabilidade após dano (ms)
+TEMPO_INVULNERAVEL = 2000    # duração da invulnerabilidade após dano (ms)
+
 
 # Tela
 LARGURA = 1100
 ALTURA = 600
 FPS = 30
 
-TRILHA_Y = 380      # posição Y da trilha na tela
-CHAO_Y = TRILHA_Y - 70      # posição Y do dino (altura da imagem = 70)
-CHAO_Y_AGACHADO = TRILHA_Y -    45 # posição Y do dino agachado (altura = 45)
-DINO_X = 80        # posição horizontal fixa do dinossauro
-PASSARO_Y = 250    # altura que o pássaro voa
+
+TRILHA_Y = 380        # posição Y da trilha na tela
+CHAO_Y = TRILHA_Y - 70       # posição Y do dino (altura da imagem = 70)
+CHAO_Y_AGACHADO = TRILHA_Y - 45    # posição Y do dino agachado (altura = 45)
+DINO_X = 80         # posição horizontal fixa do dinossauro
+PASSARO_Y = 250        # altura que o morcego voa
 
 
 

@@ -18,18 +18,20 @@ class Dino:
         self.rect.x = DINO_X
         self.rect.y = CHAO_Y
 
+
     def ativar_invulnerabilidade(self):
-        """Ativa o período de invulnerabilidade e registra o instante de início."""
+        """Inicia a invulnerabilidade e marca o tempo"""
         self.invulneravel = True
         self.tempo_invulneravel = pygame.time.get_ticks()
 
+
     def atualizar(self, teclas):
-        # verifica se o tempo de invulnerabilidade expirou
+        # checa invulnerabilidade
         if self.invulneravel:
             if pygame.time.get_ticks() - self.tempo_invulneravel >= TEMPO_INVULNERAVEL:
                 self.invulneravel = False
 
-        # Executa o estado atual ANTES de ler novo input (igual ao original)
+        # estado atual antes do input
         if self.agachando:
             self._agachar()
         if self.correndo:
@@ -53,26 +55,27 @@ class Dino:
             self.correndo = True
             self.pulando = False
 
+
     def _agachar(self):
-        """Atualiza imagem e hitbox para o estado agachado; avança a animação."""
+        """Animação e hitbox do agachamento"""
         self.image = DINO_DUCK[self.step_index // 5]
         self.rect = self.image.get_rect()
         self.rect.x = DINO_X
         self.rect.y = CHAO_Y_AGACHADO
         self.step_index += 1
 
+
     def _correr(self):
-        """Atualiza imagem e hitbox para o estado correndo; avança a animação."""
+        """Animação e hitbox da corrida"""
         self.image = DINO_RUN[self.step_index // 5]
         self.rect = self.image.get_rect()
         self.rect.x = DINO_X
         self.rect.y = CHAO_Y
         self.step_index += 1
 
+
     def _pular(self):
-        """Aplica a física do pulo: sobe enquanto vel_pulo > 0, desce quando negativa.
-        Encerra o pulo quando vel_pulo atinge -VEL_PULO (simétrico ao início).
-        """
+        """Física do pulo: vel_pulo sobe e cai por gravidade até -VEL_PULO"""
         self.image = DINO_JUMP
         if self.pulando:
             self.rect.y -= self.vel_pulo * 4
@@ -81,8 +84,9 @@ class Dino:
             self.pulando = False
             self.vel_pulo = VEL_PULO
 
+
     def desenhar(self):
-        # quando invulnerável, pisca alternando visibilidade a cada 5 frames
+        # pisca durante invulnerabilidade
         if self.invulneravel and (self.step_index // 5) % 2 == 1:
             return
         TELA.blit(self.image, (self.rect.x, self.rect.y))

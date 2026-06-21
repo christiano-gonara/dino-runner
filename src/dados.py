@@ -3,7 +3,7 @@ from src.config import DADOS_DIR, RANKING_FILE
 
 
 def salvar_ranking(pontos):
-    #Salva os 5 melhores pontos em arquivo (maior = melhor)
+    #Salva os 5 maiores pontos.
     os.makedirs(DADOS_DIR, exist_ok=True)
 
     ranking = ler_ranking()
@@ -22,5 +22,4 @@ def ler_ranking():
         return []
 
     with open(RANKING_FILE, 'r') as arquivo:
-        # int(float(...)) aceita tanto "450" quanto legados "30.0"
         return [int(float(linha.strip())) for linha in arquivo if linha.strip()]
