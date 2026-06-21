@@ -26,7 +26,12 @@ FPS = 30
 TRILHA_Y = 380      # posição Y da trilha na tela
 CHAO_Y = TRILHA_Y - 70      # posição Y do dino (altura da imagem = 70)
 CHAO_Y_AGACHADO = TRILHA_Y -    45 # posição Y do dino agachado (altura = 45)
+DINO_X = 80        # posição horizontal fixa do dinossauro
 PASSARO_Y = 250    # altura que o pássaro voa
+
+
+
+
 
 # Cores
 BRANCO = (255, 255, 255)
@@ -34,16 +39,20 @@ PRETO = (0, 0, 0)
 VERMELHO = (255, 0, 0)
 VERDE = (0, 255, 0)
 
+
 # Caminhos
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 DADOS_DIR = os.path.join(BASE_DIR, "data")
 RANKING_FILE = os.path.join(DADOS_DIR, "ranking.txt")
 
+
 # Inicializar pygame
 pygame.init()
 TELA = pygame.display.set_mode((LARGURA, ALTURA))
 pygame.display.set_caption("Dino Runner - Sobreviva 30s!")
+
+
 
 # Carregar imagens
 DINO_RUN = [
@@ -66,6 +75,8 @@ CACTO_GRANDE = [
     pygame.image.load(os.path.join(ASSETS_DIR, "Cactus", "LargeCactus2.png")),
     pygame.image.load(os.path.join(ASSETS_DIR, "Cactus", "LargeCactus3.png"))
 ]
+
+
 # Y calculado do tamanho real da imagem para alinhar a base com TRILHA_Y
 CACTO_PEQUENO_Y = TRILHA_Y - CACTO_PEQUENO[0].get_height()
 CACTO_GRANDE_Y = TRILHA_Y - CACTO_GRANDE[0].get_height()
@@ -76,6 +87,8 @@ PASSARO_IMG = [
 ]
 NUVEM = pygame.image.load(os.path.join(ASSETS_DIR, "Other", "Cloud.png"))
 TRILHA = pygame.image.load(os.path.join(ASSETS_DIR, "Other", "Track.png"))
+
+
 
 # Redimensionar
 DINO_RUN = [pygame.transform.scale(img, (60, 70)) for img in DINO_RUN]

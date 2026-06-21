@@ -17,17 +17,20 @@ from src.obstaculo import CactoPequeno, CactoGrande, Passaro
 
 class Nuvem:
     def __init__(self):
+        """Posiciona a nuvem além da borda direita para entrar gradualmente na tela."""
         self.x = LARGURA + random.randint(800, 1000)
         self.y = random.randint(50, 100)
         self.largura = NUVEM.get_width()
 
     def atualizar(self, vel):
+        """Move a nuvem para a esquerda e a reposiciona ao sair pela borda esquerda."""
         self.x -= vel
         if self.x < -self.largura:
             self.x = LARGURA + random.randint(2500, 3000)
             self.y = random.randint(50, 100)
 
     def desenhar(self):
+        """Desenha a nuvem na posição atual."""
         TELA.blit(NUVEM, (self.x, self.y))
 
 
@@ -41,6 +44,7 @@ class Jogo:
         self._inicializar_partida()
 
     def _inicializar_partida(self):
+        """Cria todos os objetos e zera os contadores para uma nova partida."""
         self.dino = Dino()
         self.obstaculos = []
         self.nuvem = Nuvem()
@@ -53,6 +57,7 @@ class Jogo:
         self.ultimo_tempo = pygame.time.get_ticks()
 
     def reiniciar(self):
+        """Reinicia o jogo chamando a inicialização de partida novamente."""
         self._inicializar_partida()
 
     def gerar_obstaculo(self):

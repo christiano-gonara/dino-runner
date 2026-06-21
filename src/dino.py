@@ -1,7 +1,5 @@
 import pygame
-from src.config import DINO_RUN, DINO_JUMP, DINO_DUCK, TELA, VEL_PULO, CHAO_Y, CHAO_Y_AGACHADO, TECLA_PULAR, TECLA_ABAIXAR, TEMPO_INVULNERAVEL
-
-X_POS = 80
+from src.config import DINO_RUN, DINO_JUMP, DINO_DUCK, TELA, VEL_PULO, CHAO_Y, CHAO_Y_AGACHADO, TECLA_PULAR, TECLA_ABAIXAR, TEMPO_INVULNERAVEL, DINO_X
 
 
 class Dino:
@@ -17,10 +15,11 @@ class Dino:
         self.tempo_invulneravel = 0
         self.image = DINO_RUN[0]
         self.rect = self.image.get_rect()
-        self.rect.x = X_POS
+        self.rect.x = DINO_X
         self.rect.y = CHAO_Y
 
     def ativar_invulnerabilidade(self):
+        """Ativa o período de invulnerabilidade e registra o instante de início."""
         self.invulneravel = True
         self.tempo_invulneravel = pygame.time.get_ticks()
 
@@ -55,20 +54,25 @@ class Dino:
             self.pulando = False
 
     def _agachar(self):
+        """Atualiza imagem e hitbox para o estado agachado; avança a animação."""
         self.image = DINO_DUCK[self.step_index // 5]
         self.rect = self.image.get_rect()
-        self.rect.x = X_POS
+        self.rect.x = DINO_X
         self.rect.y = CHAO_Y_AGACHADO
         self.step_index += 1
 
     def _correr(self):
+        """Atualiza imagem e hitbox para o estado correndo; avança a animação."""
         self.image = DINO_RUN[self.step_index // 5]
         self.rect = self.image.get_rect()
-        self.rect.x = X_POS
+        self.rect.x = DINO_X
         self.rect.y = CHAO_Y
         self.step_index += 1
 
     def _pular(self):
+        """Aplica a física do pulo: sobe enquanto vel_pulo > 0, desce quando negativa.
+        Encerra o pulo quando vel_pulo atinge -VEL_PULO (simétrico ao início).
+        """
         self.image = DINO_JUMP
         if self.pulando:
             self.rect.y -= self.vel_pulo * 4

@@ -7,6 +7,9 @@ class Obstaculo:
     """Base para todos os obstáculos."""
 
     def __init__(self, imagem, y):
+        """Posiciona o obstáculo fora da tela à direita para entrar rolando.
+        O rect é criado com as dimensões reais da imagem para colisão precisa.
+        """
         self.imagem = imagem
         self.x = LARGURA
         self.y = y
